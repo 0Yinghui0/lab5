@@ -18,16 +18,18 @@ jobs:
         python-version: '3.12.3'
 
     - name: Install dependencies
+      shell: bash
       run: |
         python3 -m venv flaskappenv
-        . flaskappenv/bin/activate
+        source flaskappenv/bin/activate
+        pip install --upgrade pip
         pip install Flask gunicorn
     
     - name: Run integration test
+      shell: bash
       run: |
-        . flaskappenv/bin/activate
+        source flaskappenv/bin/activate
         python3 -m unittest integration_test.py
-
 
     - name: Docker Login
       uses: docker/login-action@v3
