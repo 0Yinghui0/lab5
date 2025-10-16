@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        shell: bash   # <-- Forces Bash for all steps
+        shell: bash
 
     steps:
     - name: Checkout repository
@@ -23,14 +23,12 @@ jobs:
     - name: Install dependencies
       run: |
         python3 -m venv flaskappenv
-        source flaskappenv/bin/activate
-        pip install --upgrade pip
-        pip install Flask gunicorn
+        ./flaskappenv/bin/pip install --upgrade pip
+        ./flaskappenv/bin/pip install Flask gunicorn
 
     - name: Run integration test
       run: |
-        source flaskappenv/bin/activate
-        python3 -m unittest integration_test.py
+        ./flaskappenv/bin/python3 -m unittest integration_test.py
 
     - name: Docker Login
       uses: docker/login-action@v3
