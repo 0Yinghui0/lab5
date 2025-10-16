@@ -20,13 +20,14 @@ jobs:
     - name: Install dependencies
       run: |
         python3 -m venv flaskappenv
-        source flaskappenv/bin/activate
+        . flaskappenv/bin/activate
         pip install Flask gunicorn
-
+    
     - name: Run integration test
       run: |
-        source flaskappenv/bin/activate
+        . flaskappenv/bin/activate
         python3 -m unittest integration_test.py
+
 
     - name: Docker Login
       uses: docker/login-action@v3
