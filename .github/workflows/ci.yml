@@ -7,9 +7,12 @@ on:
 jobs:
   build-test-ship:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash   # <-- Forces Bash for all steps
 
     steps:
-    - name: Checkout
+    - name: Checkout repository
       uses: actions/checkout@v3
 
     - name: Set up Python
@@ -17,11 +20,11 @@ jobs:
       with:
         python-version: '3.12.3'
 
-
-    - name: Install Dependencies
+    - name: Install dependencies
       run: |
-        python3 -m venv flaskappenv  
+        python3 -m venv flaskappenv
         source flaskappenv/bin/activate
+        pip install --upgrade pip
         pip install Flask gunicorn
 
     - name: Run integration test
@@ -40,4 +43,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{secrets.DOCKERHUB_USERNAME}}/calculator-app:v1
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/calculator-app:v1
